@@ -1,0 +1,30 @@
+{% extends "parts/base.html" %}
+{% block content %}
+
+<h2>Szczegóły części: {{ czesc.nazwa }}</h2>
+
+<ul class="list-group mb-3">
+      <li class="list-group-item"><strong>Marka:</strong> {{ czesc.marka }}</li>
+      <li class="list-group-item"><strong>Opis:</strong> {{ czesc.opis }}</li>
+      <li class="list-group-item"><strong>Data produkcji:</strong> {{ czesc.data_produkcji }}</li>
+      <li class="list-group-item"><strong>Cena:</strong> {{ czesc.cena }} zł</li>
+      <li class="list-group-item">
+      <p><strong>Dodane przez:</strong> {{ czesc.autor.username }}</p>
+        <strong>Zgodne z:</strong>
+        {% for auto in czesc.samochody.all %}
+            {{ auto.marka }} {{ auto.model }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            brak danych
+        {% endfor %}
+  </li>
+  {% if czesc.zdjecie %}
+        <li class="list-group-item">
+              <strong>Zdjęcie:</strong><br>
+              <img src="{{ czesc.zdjecie.url }}" alt="{{ czesc.nazwa }}" class="img-fluid mt-2" style="max-height: 200px;">
+        </li>
+  {% endif %}
+</ul>
+
+<a href="{% url 'wszystkie' %}" class="btn btn-link">← Wróć</a>
+
+{% endblock %}

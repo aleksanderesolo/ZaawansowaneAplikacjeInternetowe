@@ -1,0 +1,21 @@
+{% extends "parts/base.html" %}
+{% block content %}
+
+<h2>Mój profil</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Dane użytkownika</legend>
+    {{ u_form.as_p }}
+  </fieldset>
+  <fieldset>
+    <legend>Dodatkowe dane profilu</legend>
+    {{ p_form.as_p }}
+  </fieldset>
+  <button type="submit" class="btn btn-success">Zapisz</button>
+</form>
+
+<a href="{% url 'wszystkie' %}" class="btn btn-link mt-3">Wróć</a>
+
+{% endblock %}

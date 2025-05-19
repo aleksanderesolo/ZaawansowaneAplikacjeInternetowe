@@ -1,0 +1,30 @@
+{% extends "parts/base.html" %}
+{% block content %}
+
+<h2>Rejestracja</h2>
+
+<form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Zarejestruj się</button>
+</form>
+
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<a href="{% url 'login' %}">Masz już konto? Zaloguj się</a>
+<a href="{% url 'wszystkie' %}" class="btn btn-link mt-3">Wróć</a>
+
+{% endblock %}

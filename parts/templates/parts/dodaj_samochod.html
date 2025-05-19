@@ -1,0 +1,23 @@
+<h2>Dodaj samochód</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Zapisz</button>
+    <a href="{% url 'wszystkie' %}" class="btn btn-secondary mt-2">← Wróć</a>
+</form>
+
+<h3 class="mt-4">Istniejące samochody:</h3>
+<ul class="list-group">
+    {% for auto in samochody %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ auto.marka }} {{ auto.model }} ({{ auto.rok }})
+            <span>
+                <a href="{% url 'edytuj_samochod' auto.id %}" class="btn btn-sm btn-outline-primary">Edytuj</a>
+                <a href="{% url 'usun_samochod' auto.id %}" class="btn btn-sm btn-outline-danger">Usuń</a>
+            </span>
+        </li>
+    {% empty %}
+        <li class="list-group-item">Brak samochodów</li>
+    {% endfor %}
+</ul>

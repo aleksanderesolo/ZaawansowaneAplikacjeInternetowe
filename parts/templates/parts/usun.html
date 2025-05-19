@@ -1,0 +1,6 @@
+<h2>Usuń część: {{ czesc.nazwa }}</h2>
+<form method="post">
+      {% csrf_token %}
+      <button type="submit">Tak, usuń</button>
+</form>
+<a href="{% url 'wszystkie' %}">Anuluj</a>

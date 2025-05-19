@@ -1,0 +1,16 @@
+<h2>Część: {{ czesc.nazwa }} ({{ czesc.marka }})</h2>
+<p>Opis: {{ czesc.opis }}</p>
+<p>Cena: {{ czesc.cena }} zł</p>
+
+<h3>Oceny:</h3>
+{% if oceny %}
+      <ul>
+            {% for o in oceny %}
+                <li><strong>{{ o.ocena }}/5</strong> – {{ o.komentarz }}</li>
+            {% endfor %}
+      </ul>
+{% else %}
+    <p>Brak ocen.</p>
+{% endif %}
+
+<a href="{% url 'wszystkie' %}">Wróć</a>

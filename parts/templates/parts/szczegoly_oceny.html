@@ -1,0 +1,9 @@
+<h2>Oceny części: {{ czesc.nazwa }}</h2>
+
+{% for ocena in oceny %}
+    <p><strong>{{ ocena.ocena }}/5</strong> – {{ ocena.komentarz }}</p>
+{% empty %}
+    <p>Brak ocen.</p>
+{% endfor %}
+
+<a href="{% url 'wszystkie' %}">Wróć</a>

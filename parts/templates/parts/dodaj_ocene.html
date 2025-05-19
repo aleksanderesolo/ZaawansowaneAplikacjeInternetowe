@@ -1,0 +1,7 @@
+<h2>Oceń część: {{ czesc.nazwa }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Zapisz ocenę</button>
+</form>
+<a href="{% url 'wszystkie' %}">Wróć</a>

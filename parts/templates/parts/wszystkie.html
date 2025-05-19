@@ -1,0 +1,53 @@
+{% extends "parts/base.html" %}
+
+{% block content %}
+<h2>Lista części samochodowych</h2>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'nowy' %}" class="btn btn-success mb-3">+ Dodaj część</a>
+{% endif %}
+
+<ul class="list-group">
+    {% for czesc in czesci %}
+        <li class="list-group-item">
+            <strong>{{ czesc.nazwa }}</strong> ({{ czesc.marka }}) – {{ czesc.cena }} zł
+
+            {% if czesc.autor == user %}
+                <span class="badge bg-success ms-2">Twoje</span>
+            {% elif not czesc.autor %}
+                <span class="badge bg-secondary ms-2">Niczyja</span>
+            {% endif %}
+
+            {% if czesc.zdjecie %}
+                <br>
+                <img src="{{ czesc.zdjecie.url }}" alt="{{ czesc.nazwa }}" height="80">
+            {% endif %}
+
+            <p class="mt-2"><strong>Zgodne z:</strong>
+                {% for auto in czesc.samochody.all %}
+                    {{ auto.marka }} {{ auto.model }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    brak danych
+                {% endfor %}
+            </p>
+
+            <div class="mt-2">
+                <a href="{% url 'edytuj' czesc.id %}" class="btn btn-sm btn-outline-primary">Edytuj</a>
+                <a href="{% url 'usun' czesc.id %}" class="btn btn-sm btn-outline-danger">Usuń</a>
+                <a href="{% url 'szczegoly' czesc.id %}" class="btn btn-sm btn-outline-info">Szczegóły</a>
+                <a href="{% url 'dodaj_ocene' czesc.id %}" class="btn btn-sm btn-outline-warning">Oceń</a>
+                <a href="{% url 'szczegoly_oceny' czesc.id %}" class="btn btn-sm btn-outline-dark">Pokaż oceny</a>
+            </div>
+
+            <p class="mt-2">
+                <strong>Średnia ocena:</strong>
+                {% if czesc.liczba_ocen > 0 %}
+                    {{ czesc.srednia_ocena|floatformat:1 }}/5 ({{ czesc.liczba_ocen }} głosów)
+                {% else %}
+                    Brak ocen
+                {% endif %}
+            </p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
